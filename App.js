@@ -8,7 +8,7 @@ app.use(express.json())
 app.listen(8000,()=>{
     console.log("hi")
 })
- const Expenses = [{id:10, description:"food", amount:20},{id:18, description:"shopping", amount:40},{id:27, description:"petrol", amount:90}]
+ let Expenses = [{id:10, description:"food", amount:20},{id:18, description:"shopping", amount:40},{id:27, description:"petrol", amount:90}]
 
 app.get("/expenses/:id",(req,res)=>{
      
@@ -35,7 +35,7 @@ app.get("/expense/:total",(req,res)=>{
 
     let total = 0;
     for (let i = 0; i < Expenses.length; i++) {
-    total = total + Expenses[i].amount ;
+    total = Number(total + Expenses[i].amount) ;
    
     }
 
@@ -46,18 +46,20 @@ app.delete("/expense/:id",(req,res)=>{
     
      let del = req.params.id 
     let remained = Expenses.filter((expe) => expe.id != del )
-     
+    Expenses = remained
     
-    res.status(200).json({expenses:remained})
+    res.status(200).json({expenses:Expenses})
     
 })
 
 app.put("/expense/:id",(req,res)=>{
     let sel = req.params.id 
     let newEx= Expenses.filter((expe) => expe.id == sel )  
+    let unchanged =  Expenses.filter((expe) => expe.id != sel ) 
     newEx = [{id:sel, description:req.body.description, amount:req.body.amount}] 
+     Expenses =    newEx.concat(unchanged)
    
-    res.status(200).json({expenses:newEx})
+    res.status(200).json({expenses:Expenses})
     
 })
 
