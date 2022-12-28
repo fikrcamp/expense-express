@@ -30,8 +30,12 @@ app.delete("/expenses/:id", (req, res)=>{
 // expenses/id PUT - replace or update existing data
 app.put("/expenses/:id", (req, res)=>{
     const id = req.params.id;
-    const updatedId = expenses.findIndex(i => i.id == req.params.id)
-    expenses[updatedId] = {id:id, description:req.body.description, amount:req.body.amount}
+    const updatedId = expenses.findIndex(i => i.id == req.params.id);
+    const updatedExpenses = {
+        id:id, 
+        description: req.body.description || expenses[updatedId].description, 
+        amount: req.body.amount || expenses[updatedId].amount}
+    expenses[updatedId] = updatedExpenses
     res.status(200).json({message:'successfully updated the expense list'})
 });
 
