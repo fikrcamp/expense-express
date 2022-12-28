@@ -9,10 +9,10 @@ app.listen(9000, () => {
 
 app.use(express.json())
 
-const expense = [
-    { id: 1, description: "food", amount: 100 },
-    { id: 2, description: "petrol", amount: 200 },
-    { id: 3, description: "shopping", amount: 900 },
+let expense = [
+    { id: 150, description: "food", amount: 100 },
+    { id: 70, description: "petrol", amount: 200 },
+    { id: 50, description: "shopping", amount: 900 },
 ]
 
 //displayin what are inside in our list 
@@ -31,18 +31,39 @@ app.post("/expense", (req, res) => {
 
 //deleting specific id or item in our list
 app.delete("/expense/:id", (req, res) => {
-    const deleted = req.params.id[req.params.id - 1]
-    expense.splice(deleted, 1)
-    res.status(200).json({ message: "Successfully deleted this item" })
+
+    const deletedItem = parseInt(req.params.id)
+    let newUpdate = expense.filter((e) => e.id !== deletedItem)
+    expense = newUpdate
+    res.status(200).json({ message: `You've successfully deleted the item has an id of ${req.params.id}` })
+
 })
 
 //editing specific id and an object
 app.put("/expense/:id", (req, res) => {
-    const edited = req.params.id - 1
-    expense.splice(edited, 1, { id: parseInt(req.params.id), description: req.body.description, amount: req.body.amount })
-    res.status(200).json({ message: "successfull edited" })
+    const edited = parseInt(req.params.id)
+
+    //storing another new object from input body 
+    let newObj = {
+        id: edited,
+        description: req.body.description,
+        amount: req.body.amount,
+    }
+
+    //using loop to find the index of every item in my previous array [expense] and set to my updated object
+    let i = expense.findIndex(o => o.id === edited);
+    if (expense[i]) {
+        expense[i] = newObj
+    } else {
+        expense.push(newObj)
+    }
+
+
+    res.status(200).json({ message: `You've edited the item has an id of ${edited}` })
 
 })
+
+
 
 //calculating total of our expense amount list
 app.get("/expense/total", (req, res) => {
