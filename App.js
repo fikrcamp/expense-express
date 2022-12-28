@@ -23,7 +23,7 @@ app.get("/expenses/:id",(req,res)=>{
 
 app.post("/expenses",(req,res)=>{
 
-    let id = Expenses[Expenses.length - 1] ? Expenses[Expenses.length - 1].id + 1 : 1;
+    let id = Expenses[Expenses.length - 1] ? Expenses[Expenses.length - 1].id + 1 : 1
     Expenses.push({id:id, description:req.body.description, amount:req.body.amount})
     res.status(201).json({expenses:Expenses})
    
