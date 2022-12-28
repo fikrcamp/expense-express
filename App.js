@@ -8,16 +8,14 @@ app.use(express.json())
 app.listen(8000,()=>{
     console.log("hi")
 })
- const Expenses = [{id:1, description:"food", amount:20},{id:2, description:"shopping", amount:40},]
+ const Expenses = [{id:10, description:"food", amount:20},{id:18, description:"shopping", amount:40},{id:27, description:"petrol", amount:90}]
 
 app.get("/expenses/:id",(req,res)=>{
      
-    let index = req.params.id - 1
+    let sel = req.params.id 
+    let selected = Expenses.filter((expe) => expe.id == sel )
+     
     
-    let selected = req.params.id == Expenses[index].id ? [{id:Expenses[index].id , description:Expenses[index].description, amount:Expenses[index].amount}] : []
-    
-    
-   
     res.status(200).json({expenses:selected})
 })
 
@@ -45,18 +43,19 @@ app.get("/expense/:total",(req,res)=>{
 })
 
 app.delete("/expense/:id",(req,res)=>{
-    let del = req.params.id -1
-  Expenses.splice(del,1)
-      
-   
-    res.status(200).json({expenses:Expenses})
+    
+     let del = req.params.id 
+    let remained = Expenses.filter((expe) => expe.id != del )
+     
+    
+    res.status(200).json({expenses:remained})
     
 })
 
 app.put("/expense/:id",(req,res)=>{
-   let index = req.params.id - 1
-         let newEx = req.params.id == Expenses[index].id && ((req.body.description != Expenses[index].description )|| (req.body.amount != Expenses[index].amount )) ? [{id:Expenses[index].id, description:req.body.description, amount:req.body.amount}] : [{id:Expenses[index].id, description:Expenses[index].description, amount:Expenses[index].amount}]
-          console.log(newEx)
+    let sel = req.params.id 
+    let newEx= Expenses.filter((expe) => expe.id == sel )  
+    newEx = [{id:sel, description:req.body.description, amount:req.body.amount}] 
    
     res.status(200).json({expenses:newEx})
     
