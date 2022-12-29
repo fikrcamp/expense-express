@@ -43,25 +43,28 @@ app.delete("/expense/:id", (req, res) => {
 app.put("/expense/:id", (req, res) => {
     const edited = parseInt(req.params.id)
 
-    //storing another new object from input body 
+    //
+    let i = expense.findIndex(o => o.id === edited);
+
+
+    // storing another new object from input body 
     let newObj = {
         id: edited,
-        description: req.body.description,
-        amount: req.body.amount,
+        description: req.body.description || expense[i].description,
+        amount: req.body.amount || expense[i].amount,
     }
 
-    //using loop to find the index of every item in my previous array [expense] and set to my updated object
-    let i = expense.findIndex(o => o.id === edited);
+
+    //setting the update to my array  
     if (expense[i]) {
         expense[i] = newObj
-    } else {
-        expense.push(newObj)
     }
 
 
-    res.status(200).json({ message: `You've edited the item has an id of ${edited}` })
+    res.status(200).json({ message: `you've edited successfully the item has an id of ${edited}` })
 
 })
+
 
 
 
