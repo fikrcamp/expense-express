@@ -1,15 +1,19 @@
 {
   "name": "expense-express",
   "version": "1.0.0",
-  "description": "",
+  "description": "Your are required to create some endpoints and each endpoint must do a specific task. This project you will be adding, removing, editing and getting expenses data. Below are the endpoints and their methods that are required:",
   "main": "App.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node App.js"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abdalla-10/expense-express.git"
+  },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "express": "^4.18.2"
-  }
+  "bugs": {
+    "url": "https://github.com/Abdalla-10/expense-express/issues"
+  },
+  "homepage": "https://github.com/Abdalla-10/expense-express#readme"
 }
